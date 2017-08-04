@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+
+<head>
+  <meta charset="utf-8" />
+  <title>include - artTemplate</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta content="" name="description" />
+  <meta content="" name="author" />
+  <!-- BEGIN GLOBAL MANDATORY STYLES -->
+  <link href="dist/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="dist/bootstrap-toastr/toastr.min.css" rel="stylesheet" />
+  <link href="dist/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" />
+  <link href="dist/bootstrap-modal/css/bootstrap-modal-bs3patch.css" rel="stylesheet" />
+  <link href="dist/bootstrap-toastr/toastr.min.css" rel="stylesheet" />
+
+  <!-- END GLOBAL MANDATORY STYLES -->
+
+  <!-- BEGIN PAGE LEVEL PLUGIN STYLES -->
+  <link href="dist/bootstrap-datepicker/datepicker.css" rel="stylesheet" />
+  <!-- END PAGE LEVEL PLUGIN STYLES -->
+
+  <!-- BEGIN THEME STYLES -->
+  <link href="dist/custom.css" rel="stylesheet" /> 
+<!--   <link href="/o2p-front-end/conf/resources/css/style-template.css" rel="stylesheet" />
+  <link href="/o2p-front-end/conf/resources/css/style.css" rel="stylesheet" />
+  <link href="/o2p-front-end/conf/resources/css/themes/blue.css" rel="stylesheet" id="style_color" />
+  <link href="/o2p-front-end/conf/resources/css/style-responsive.css" rel="stylesheet" />
+  <link href="/o2p-front-end/conf/resources/css/custom.css" rel="stylesheet" /> -->
+  <!-- END THEME STYLES -->
+
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+
+<body>
+  <!-- BEGIN PAGE CONTAINER -->
+  <div style="margin:50px;">
+     <a href="javascript:;" onclick="App.modal({width:'container',remote:'raiseThePrice.shtml',data:{settlementRuleId:123}})" class="btn btn-primary btn-lg">open modal</a>
+  </div>
+  <script src="dist/jquery-1.10.2.min.js"></script>
+  <script src="dist/bootstrap/js/bootstrap.min.js"></script>
+  <script src="dist/bootstrap-toastr/toastr.min.js"></script>
+  <script src="dist/bootstrap-modal/js/bootstrap-modalmanager.js"></script>
+  <script src="dist/bootstrap-modal/js/bootstrap-modal.js"></script>
+  <script src="dist/template.js"></script>
+  <!-- build:remove -->
+  <script src="dist/mock.js"></script>
+  <!-- /build -->
+  <script src="dist/language-en.js"></script>
+  <script src="dist/app.js"></script>
+  <!-- build:remove -->
+  <script>
+    $.ajaxSetup({
+      data: Math.random().toString()
+    })
+    $(document).ajaxSuccess(function(event, jqXHR, ajaxOptions) {
+      console.log('send params:' + ajaxOptions.data);
+      if (jqXHR.responseJSON) {
+        console.log(jqXHR.responseJSON)
+      };
+    });
+    var Random = Mock.Random;
+    Mock.setup({
+      timeout: '200-1000'
+    })
+    Mock.mock(/raiseThePriceData.json/, {
+      "health": {
+        "code": 1,
+        "message": function() {
+          if (this.code != 1) {
+            return "not health, no data"
+          }
+        }
+      },
+      "oldForm": {
+        "ruleName": "@first",
+        "billSource": 1,
+        "currency": {
+          "id": 10302,
+          "name": "Euro"
+        },
+        "description": "",
+        "startDate": "",
+        "endDate": "",
+        "cycle": 1,
+        "cycleType": 1,
+        "settlementDirection": 1,
+        "settlementConditions": [{
+          "ruleConditionId": 1,
+          "chargeRangeMin": 0,
+          "chargeRangeMax": -1,
+          "ratio1": 0,
+          "ratio2": 0,
+          "basicCharge": 0
+        }],
+        // tpl begin
+        "billSourceList": [{
+          "code": 1,
+          "name": "Partner Provider"
+        }, {
+          "code": 2,
+          "name": "RTI Generator"
+        }],
+        "cycleTypeList": [{
+          "code": 1,
+          "name": "Day"
+        }, {
+          "code": 2,
+          "name": "Week"
+        }, {
+          "code": 3,
+          "name": "Month"
+        }, {
+          "code": 4,
+          "name": "Quarter"
+        }, {
+          "code": 5,
+          "name": "Year"
+        }],
+        "currencyList": [{
+          "code": 11403,
+          "name": "DKK"
+        }, {
+          "code": 11503,
+          "name": "HUF"
+        }, {
+          "code": 10201,
+          "name": "DollarCent"
+        }, {
+          "code": 10202,
+          "name": "Dollar"
+        }, {
+          "code": 10301,
+          "name": "EuroCent"
+        }, {
+          "code": 10302,
+          "name": "Euro"
+        }, {
+          "code": 10403,
+          "name": "Fen"
+        }, {
+          "code": 10404,
+          "name": "Yuan"
+        }],
+        "settlementDirectionList": [{
+            "code": 1,
+            "name": "Operator Pays to Partner"
+          }, {
+            "code": 2,
+            "name": "Partner Pays to Operator"
+          }]
+          //tpl end  
+      },
+      "newForm": 0, //æ²¡ææä»·ä¿¡æ¯æ¶è¿å0    
+    })
+    Mock.mock(/saveRaiseThePriceData.json/, {
+      "health": {
+        "code": 1,
+        "message": function() {
+          if (this.code != 1) {
+            return "not health, no data"
+          }
+        }
+      },
+      "status": 1,
+      "message": "",
+    })
+  </script>
+  <!-- /build -->
+
+  <!-- END CORE PLUGINS -->
+  <!-- BEGIN PAGE LEVEL JAVASCRIPTS(REQUIRED ONLY FOR CURRENT PAGE) -->
+  <script src="dist/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+  <script>
+    jQuery(document).ready(function() {
+      App.init();
+    });
+  </script>
+  <!-- END PAGE LEVEL JAVASCRIPTS -->
+</body>
+
+</html>

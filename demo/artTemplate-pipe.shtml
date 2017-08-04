@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>管道语法 - artTemplate</title>
+  <script src="dist/jquery-1.10.2.min.js"></script>
+  <script src="dist/template.js"></script>
+</head>
+
+<body>
+  <h3>管道语法</h3>
+  <hr>
+  <h4>无参数：<code>{{currency | translate}}</code></h4>
+  <div id="test1"></div>
+  <script type="text/html" id="art-test1">
+    {{currency}} ==> {{currency | translate}}
+  </script>
+  <script>
+    template.helper('translate', function(code) {
+      switch (code) {
+        case 1:
+          return 'Euro';
+          break;
+        case 2:
+          return 'DKK';
+          break;
+        case 3:
+          return 'HUF';
+          break;
+        case 4:
+          return 'DollarCent';
+          break;
+        default:
+          return 'None';
+      }
+    })
+    $.ajax({
+        url: 'data.json',
+        type: 'get',
+        dataType: 'json'
+      })
+      .done(function(data) {        
+        var html = template('art-test1', data);
+        $('#test1').html(html);
+      })
+  </script>
+  <!--########################################-->
+  <br>
+  <br>
+  <br>
+  <h4>有参数</h4>
+  <pre><code>{{date | dateFormat:"YYYY-MM-DD"}}</code></pre>
+  <div id="test2"></div>
+  <script type="text/html" id="art-test2">
+    由<code>new Date()</code>创建的时间对象 ==> {{date | dateFormat : "YYYY-MM-DD"}}
+    <br>
+  </script>
+  <script>
+    /**
+     * 按照format格式来格式化日期
+     * @param  {[object Date]} date   new Date()创建的Date对象
+     * @param  {[string]} format  如下
+     * yyyy|YYYY - 2016 年份
+     * yy|YY - 16 年份
+     * MM - 01 月份 补足两位数，下面的日、时、分、秒同理
+     * M - 1 月份
+     * w|W - 二 周二
+     * @return {[type]}        返回字符串
+     */
+    template.helper('dateFormat', function(date, format) {
+      console.log(date)
+        //没有传参，date不是Date对象，format不是字符串，均返回
+      if (arguments.length < 2) {
+        alert('arguments is invalid');
+        return;
+      }
+      var str = format;
+      var Week = ['日', '一', '二', '三', '四', '五', '六'];
+      str = str.replace(/yyyy|YYYY/, date.getFullYear());
+      str = str.replace(/yy|YY/, (date.getYear() % 100) > 9 ? (date.getYear() % 100).toString() : '0' + (date.getYear() % 100));
+      str = str.replace(/MM/, (date.getMonth() + 1) > 9 ? (date.getMonth() + 1).toString() : '0' + (date.getMonth() + 1));
+      str = str.replace(/M/g, (date.getMonth() + 1));
+      str = str.replace(/w|W/g, Week[date.getDay()]);
+      str = str.replace(/dd|DD/, date.getDate() > 9 ? date.getDate().toString() : '0' + date.getDate());
+      str = str.replace(/d|D/g, date.getDate());
+      str = str.replace(/hh|HH/, date.getHours() > 9 ? date.getHours().toString() : '0' + date.getHours());
+      str = str.replace(/h|H/g, date.getHours());
+      str = str.replace(/mm/, date.getMinutes() > 9 ? date.getMinutes().toString() : '0' + date.getMinutes());
+      str = str.replace(/m/g, date.getMinutes());
+      str = str.replace(/ss|SS/, date.getSeconds() > 9 ? date.getSeconds().toString() : '0' + date.getSeconds());
+      str = str.replace(/s|S/g, date.getSeconds());
+      return str;
+    })
+    var data2 = {
+      date: new Date()
+    };
+    var html = template('art-test2', data2);
+    $('#test2').html(html);
+  </script>
+  <!--########################################-->
+  <br>
+  <br>
+  <br>
+  <h4>管道嵌套</h4>
+  <pre><code>{{num | adder | adder}}</code></pre>
+  <div id="test3"></div>
+  <script type="text/html" id="art-test3">
+    {{num}} ==> {{num | adder | adder | adder | adder | adder | adder}}
+    <br>
+  </script>
+  <script>
+   template.helper('adder',function(num){
+     return ++num
+   })
+   var data3 = {
+    num:1
+   }
+    var html = template('art-test3', data3);
+    $('#test3').html(html);
+  </script>
+</body>
+
+</html>
