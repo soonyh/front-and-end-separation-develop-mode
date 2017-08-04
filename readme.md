@@ -8,4 +8,4 @@
 + 开发规范
 + 开发模式
 
-详情见PPT
+详情见[PPT](https://soonyh.github.io/front-and-end-separation-develop-mode)
