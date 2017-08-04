@@ -1,0 +1,116 @@
+/**********************************  Below css use to reset bootstrap  ********************************/
+/* --------- remove rounds from all elements --------- */
+div, input, select, textarea, span, img, table, td, th, p, a, button, ul, code, pre, li, option { -webkit-border-radius: 0 !important; -moz-border-radius: 0 !important; border-radius: 0 !important; }
+
+/* --------- Buttons & Dropdown Buttons --------- */
+.btn { padding: 6px 14px; font-size: 14px; -webkit-box-shadow: none !important; -moz-box-shadow: none !important; box-shadow: none !important; text-shadow: none; }
+
+/* --------- remove outline from a element and button element --------- */
+a, a:focus, a:hover, a:active, button { outline: 0 !important; }
+
+/* --------- Forms --------- */
+/*( WebKit browsers )*/
+::-webkit-input-placeholder { color: #999; font-style: italic; }
+
+/*( Mozilla Firefox 4 to 18 )*/
+:-moz-placeholder { color: #999; font-style: italic; }
+
+/*( Mozilla Firefox 19+ )*/
+::-moz-placeholder { color: #999; font-style: italic; }
+
+/*( Internet Explorer 10+ )*/
+:-ms-input-placeholder { color: #999; font-style: italic; }
+
+.form-control { font-size: 14px; font-weight: normal; color: #333; background-color: #ffffff; border: 1px solid #e5e5e5; border-radius: 0; -webkit-box-shadow: none; box-shadow: none; -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s; transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s; }
+
+.form-control:focus { border-color: #999; outline: 0; -webkit-box-shadow: none !important; box-shadow: none !important; }
+
+/*( input  groups )*/
+.input-group.input-group-fixed { width: auto !important; }
+
+.input-group-addon { border-color: #e5e5e5; background: #e5e5e5; min-width: 39px; }
+
+.input-group-addon > i { color: #999; }
+
+.help-inline { color: #737373; display: inline-block; padding: 5px; }
+
+/*( Error States )*/
+.has-warning .help-inline, .has-warning .help-block, .has-warning .control-label { color: #f0ad4e; }
+
+.has-warning .form-control { border-color: #f0ad4e; -webkit-box-shadow: none; box-shadow: none; }
+
+.has-warning .form-control:focus { border-color: #a47e3c; -webkit-box-shadow: none; box-shadow: none; }
+
+.has-warning .input-group-addon { color: #f0ad4e; background-color: #fcf8e3; border-color: #f0ad4e; }
+
+.has-error .help-inline, .has-error .help-block, .has-error .control-label { color: #e64545; }
+
+.has-error .form-control { border-color: #e64545; -webkit-box-shadow: none; box-shadow: none; }
+
+.has-error .form-control:focus { border-color: #953b39; -webkit-box-shadow: none; box-shadow: none; }
+
+.has-error .input-group-addon { color: #e64545; background-color: #f2dede; border-color: #e64545; }
+
+.has-success .help-inline, .has-success .help-block, .has-success .control-label { color: #3fad46; }
+
+.has-success .form-control { border-color: #3fad46; -webkit-box-shadow: none; box-shadow: none; }
+
+.has-success .form-control:focus { border-color: #356635; -webkit-box-shadow: none; box-shadow: none; }
+
+.has-success .input-group-addon { color: #3fad46; background-color: #dff0d8; border-color: #3fad46; }
+
+/***
+Bootstrap modal 
+***/
+.modal { z-index: 10050 !important; outline: none !important; }
+
+.modal-header { border-bottom: 1px solid #EFEFEF; }
+
+.modal-header h3 { font-weight: 300; }
+
+/***
+Modal header close button fix
+***/
+.modal-header .close { margin-top: 0px !important; }
+
+.modal-backdrop { border: 0 !important; outline: none !important; z-index: 10049 !important; }
+
+.modal-backdrop, .modal-backdrop.fade.in { background-color: #333 !important; }
+
+/* fix: content shifting to the right on modal open due to scrollbar closed */
+.modal { overflow-y: auto !important; }
+
+.modal-open { overflow-y: auto !important; }
+
+.modal-open-noscroll { overflow-y: hidden !important; }
+
+/**********************************  Below css use to extend bootstrap ********************************/
+/* --------- Input icons --------- */
+/*( input with right aligned and colored icons )*/
+/*( input with left aligned icons )*/
+.input-icon { position: relative; }
+
+.input-icon input { padding-left: 33px !important; }
+
+.input-icon > i { color: #ccc; display: block; position: absolute; margin: 9px 2px 4px 10px; width: 16px; height: 16px; font-size: 16px; text-align: center; }
+
+.input-icon.right input { padding-left: 12px !important; padding-right: 33px !important; }
+
+.input-icon.right > i { right: 8px; float: right; }
+
+.has-success .input-icon > i { color: #3fad46; }
+
+.has-warning .input-icon > i { color: #f0ad4e; }
+
+.has-error .input-icon > i { color: #e64545; }
+
+/* --------- custom style --------- */
+.section:first-child { margin-top: 20px; }
+
+.section { margin-bottom: 20px; }
+
+.mb10 { margin-bottom: 10px; }
+.pd10{}
+.mb0{margin-bottom: 0!important;}
+.mb30{margin-bottom: 30px!important;}
+.pointer{cursor: pointer;}

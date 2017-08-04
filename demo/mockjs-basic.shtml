@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>基础语法 - Mock.js</title>
+  <script src="dist/jquery-1.10.2.min.js"></script>
+  <script src="dist/mock.js"></script>
+  <style>
+    code {
+      background-color: #f9f2f4;
+      border-radius: 4px;
+      color: #c7254e;
+      font-size: 90%;
+      padding: 2px 4px;
+    }
+  </style>
+  <script>
+    /**
+     * 把"a=2&b=3&c=4" 字符串序列化成 {a:2,b:3,c:4}
+     */
+    var serialize = function(str) {
+      //修复 jquery.serialize() 会把空格转成'+'的坑
+      var str = str.replace(/\+/g, " ");
+      var obj = {};
+      var params = str.split('&');
+      for (var i = 0; i < params.length; i++) {
+        var val = params[i].split("=");
+        //多选的select，在jquery.serialize()的时候名称都是相同的，如右：rules=1&rules=3
+        //这个时候需要把值以数组的形式保存，如右：rules：[1,3]
+        if (obj[val[0]]) {
+          var arr = [];
+          arr.push(obj[val[0]]); //读取已存在的，保存到临时数组
+          arr.push(unescape(val[1]));
+          obj[val[0]] = arr;
+        } else {
+          obj[val[0]] = unescape(val[1])
+        }
+      }
+      return obj
+    }
+  </script>
+</head>
+
+<body>
+  <dl>
+    <dt>Mock.setup()</dt>
+    <dd><code>Mock.setup({timeout: '200-600'})</code> -- 拦截到ajax请求后，延迟200-600毫秒返回
+    </dd>
+  </dl>
+  <hr>
+  <dl>
+    <dt>Mock.mock()</dt>
+    <dd><code>Mock.mock( rurl, template )</code>
+    </dd>
+    <dd><code>Mock.mock( rurl, function( options ) )</code>
+    </dd>
+    <dd><code>Mock.mock( rurl, ,rtype, template )</code>
+    </dd>
+    <dd><code>Mock.mock( rurl, rtype, function( options ) )</code>
+    </dd>
+  </dl>
+  <hr>
+  <dl>
+    <dt>Mock.Random</dt>
+  </dl>
+  <hr>
+  <h1>demo</h1>
+  <button onclick="loadContent()">点击加载</button>
+  <script>
+    var loadContent = function() {
+      $.ajax({
+          url: 'mock.json',
+          type: 'post',
+          dataType: 'json',
+          data: {
+            id: 71858333
+          }
+        })
+        .done(function(data) {
+          console.log("success,get data: o%", data)
+        })
+        .fail(function() {
+          console.log("request error");
+        })
+    }
+  </script>
+  <!-- 以下是mock规则 -->
+  <script>
+    var Random = Mock.Random;
+    Mock.setup({
+      timeout: '200'
+    });
+    var template = {
+      'user': {
+        'first': '@FIRST',
+        'middle': '@FIRST',
+        'last': '@LAST',
+        'full': '@first @middle @last',
+        'age': '@natural(60, 100)'
+      },
+      'info': function() {
+        return this.user.full + ' is ' + this.user.age + ' years old. He last login time is at' + Random.datetime('yyyy/MM/dd') + ' ' + Random.time('HH:mm:ss') + '.';
+      }
+    };
+
+
+
+    /* ****************************** 
+     * Mock.mock( rurl, template )
+     * *********************/
+    // Mock.mock(/mock.json/, template);
+
+
+    /* ***************************************** 
+     * Mock.mock( rurl, rtype,template )
+     * *******************************/
+    // Mock.mock(/mock.json/, 'post', template)
+
+
+    /* *********************************** 
+     * Mock.mock( rurl, function(options) )
+     * ****************************/
+
+    Mock.mock(/mock.json/, function(options) {
+      console.log(options)
+      if (options.type == 'POST' && serialize(options.body).id == 71858) {
+        return Mock.mock(template)
+      }
+    })
+  </script>
+</body>
+
+</html>

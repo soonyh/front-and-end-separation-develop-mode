@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src="dist/jquery-1.10.2.min.js"></script>
+  <script src="dist/template.js"></script>
+</head>
+
+<body>
+  <div id="test"></div>
+  <script type="text/html" id="art-test">
+    <h3>{{title}}</h3>
+    <ul>
+      {{each list}}
+      <li>{{$index+1}} - {{$value}}</li>
+      {{/each}}
+    </ul>
+  </script>
+  <script src="dist/mock.js"></script>
+  <script>
+    var Random = Mock.Random;
+    Mock.setup({
+      timeout: '200-1000'
+    })
+    Mock.mock(/test.json/, {
+      "title": '标签',
+      "list": ['文艺', '博客', '摄影', '电影', '民谣', '旅行', '吉他']
+    })
+
+    $.ajax({
+        url: 'test.json',
+        type: 'post',
+        dataType: 'json'
+      })
+      .done(function(data) {
+        var html = template('art-test', data);
+        $('#test').html(html);
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+  </script>
+</body>
+
+</html>

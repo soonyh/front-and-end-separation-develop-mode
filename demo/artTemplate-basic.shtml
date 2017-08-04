@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>基础语法 - artTemplate</title>
+  <script src="dist/jquery-1.10.2.min.js"></script>
+  <script src="dist/template.js"></script>
+  <!-- <script src="http://rap.taobao.org/rap.plugin.js?projectId=7496&mode=0"></script> -->
+</head>
+
+<body>
+  <div id="test1"></div>
+  <hr>
+  <div id="test2"></div>
+  <script type="text/html" id="art-test1">
+    <h3>{{title}}</h3>
+    <ul>
+      {{each list}}
+      <li>{{$index+1}} - {{$value}}</li>
+      {{/each}}
+    </ul>
+  </script>
+  <script type="text/html" id="art-test2">
+    <h3>{{title}}</h3>
+    <ul>
+      {{each school}}
+      <li>{{$index+1}} - {{$value.name}} - 共{{$value.total}}人</li>
+      {{/each}}
+    </ul>
+  </script>
+  <script>
+    //test1
+    $.ajax({
+        url: 'data1.json',
+        type: 'get',
+        dataType: 'json'
+      })
+      .done(function(data) {
+        var html = template('art-test1', data);
+        $('#test1').html(html);
+      })
+
+      //test2
+    $.ajax({
+        url: 'data2.json',
+        type: 'get',
+        dataType: 'json'
+      })
+      .done(function(data) {
+        var html = template('art-test2', data);
+        $('#test2').html(html);
+      })
+  </script>
+</body>
+
+</html>
